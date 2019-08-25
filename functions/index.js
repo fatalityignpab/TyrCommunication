@@ -23,7 +23,7 @@ var mailOptions = {
     cc: 'ignaciopabloro2@gmail.com',
 };
 
-exports.enviarCorreoConReporte = functions.database.ref('/InformacionReporte/{IdEnviarReporte}') //Cuando se crea un nuevo registroPostulante se ejecuta el código
+    exports.enviarCorreoConReporte = functions.database.ref('/InformacionReporte/{IdEnviarReporte}') //Cuando se crea un nuevo registroPostulante se ejecuta el código
     .onCreate((snapshot, context) => {
 
         const nombre = snapshot.child('Nombre').val();
@@ -37,19 +37,31 @@ exports.enviarCorreoConReporte = functions.database.ref('/InformacionReporte/{Id
         mailOptions.to = correo;
         //mailOptions.attachments = [{filename: 'Reporte.pdf', path: "web/EjemWeb.pdf", contentType: 'application/pdf'  }];  
 
-        mailOptions.html = "<center>" +
-            "<img src='https://i.ibb.co/zbJFsPM/TYR.jpg' center width='80px'>" +
-            "<div><h1>Reporte de fallas en servicio</h1></div>" +
-            "<hr>" +
-            "<h3><b>Información personal del cliente</b></h3>" +"hr"+
-            "</center>" +
-            "<h4>Número de contrato del cliente: <b>" + numCuenta +
-            "</b></h4>" + "<h4> Número de reporte: <b>" + folio + "</b></h4>" +
-            "<br><br><b>Nombre del cliente: <b>"+nombre+
-            "<br><br><b>Domicilio del cliente " + domicilio + "</b>" +
-            "<hr>" +
-            "<center>Descripción de la falla</center>" + "<hr>" +
-            "<br><br>" + descripcionFalla + "<br>";
+         mailOptions.html = "<center>" +
+            "<img src='https://i.ibb.co/zbJFsPM/TYR.jpg' width='230' height='250'>" +
+            "<hr color='blue' size=1 width='400'>" +
+            "<h2><font color='#002080'> REPORTE DE FALLAS EN SERVICIO </font> </h2>" +
+            "<hr color='blue' size='1' width='400'>" +
+            "<br><br>" +
+            "<TABLE BORDER '1' cellpadding='0' cellspacing='0' bgcolor='#f5f9ff'>" +
+            "<TR><TH>NOMBRE</TH>" +
+            "<TD>" + nombre + "</TD>" +
+            "<TR><TH>CORREO</TH>" +
+            "<TD>" + correo + "</TD>" +
+            "<TR><TH>DESCRIPCIÓN</TH>" +
+            "<TD>" + descripcionFalla + "</TD>" +
+            "<TR><TH>DOMICILIO</TH>" +
+            "<TD>" + domicilio + "</TD>" +
+            "<TR><TH>FOLIO</TH>" +
+            "<TD>" + folio + "</TD>" +
+            "<TR><TH>NO_CUENTA</TH>" +
+            "<TD>" + numCuenta + "</TD>" +
+            "</TABLE>" +            
+            "<br><br>" +
+            "<h3><font color='#002080'>De inmediato, un técnico asistirá a su domicilio para solucionar su problema</font></h3>" +
+            "<b>¡Que tenga un excelente día!</b>" +
+            "</center>"/*  +
+            "<font size=5&gt></font>" */;
 
         return transporter.sendMail(mailOptions).then(() => {
             console.log("Se envió el correo");
