@@ -78,11 +78,12 @@ exports.enviarCorreoConReporte = functions.database.ref('/InformacionReporte/{Id
                // });
 
      
-        mailOptions.html = "<font color=\"gray\"><b>Buen día estimados</b>," +
-        "<br><br>El usuario <b>" + numCuenta + "</b>, solicita información de la filial: HÁBIL  <b>" + 
+        mailOptions.html = "<font color=\"gray\"><b>Buen día estimado</b>," +
+        "<br><br>El usuario con el número de cuenta <b>" + numCuenta + "</b>, solicita información del reporte con el folio: "+folio+"  <b>" + 
         "</b><br><br>Información de contacto del solicitante:<blockquote>" +
-        "Correo: <b>" + descripcionFalla + domicilio + "</b>" +
-        "<br>Teléfono: <b>" + folio + "</b>" +
+        "Correo: <b>" + correo + "</b>" +
+        "<br>Descripción de la falla: <b>" + descripcionFalla + "</b>" +
+        "<br>Domicilio: <b>" + domicilio + "</b>" +
         "<br>Favor de dar seguimiento a la solicitud.</blockquote>" +
         "<br><br><b>Saludos</b>.</font>";
 
