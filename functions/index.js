@@ -51,11 +51,11 @@ var mailOptions = {
 
 exports.enviarCorreoConReporte = functions.database.ref('/InformacionReporte/{IdEnviarReporte}') //Cuando se crea un nuevo registroPostulante se ejecuta el código
     .onCreate((snapshot, context) => {
-        const myPdfFile = admin.storage().bucket().file('/test/Reporte.pdf');
+/*         const myPdfFile = admin.storage().bucket().file('/test/Reporte.pdf');
         const doc = new PDFDocument;
         const stream = doc.pipe(myPdfFile.createWriteStream());
         doc.fontSize(25).text('Test 4 PDF!', 100, 100);
-        doc.end();
+        doc.end(); */
       const correo=snapshot.child('Correo').val();
       const descripcionFalla=snapshot.child('Descripcion').val();
       const domicilio=snapshot.child('Domicilio').val();
@@ -70,7 +70,7 @@ exports.enviarCorreoConReporte = functions.database.ref('/InformacionReporte/{Id
                // stream.on('finish', function() {
 
                     
-        mailOptions.attachments = [{filename: 'Reporte.pdf', path: "test/Reporte.pdf", contentType: 'application/pdf'  }];  
+        mailOptions.attachments = [{filename: 'Reporte.pdf', path: "web/EjemWeb.pdf", contentType: 'application/pdf'  }];  
 
                     // or get a blob URL for display in the browser
                     //const url = stream.toBlobURL('application/pdf');
