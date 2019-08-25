@@ -7,9 +7,10 @@ admin.initializeApp();
 const nodemailer = require('nodemailer');
 
 const PDFDocument = require('pdfkit');
-const doc = new PDFDocument;
+
+/* const doc = new PDFDocument;
 const blobStream = require('blob-stream');
-const stream = doc.pipe(blobStream());
+const stream = doc.pipe(blobStream()); */
 
 const gmailEmail = 'pruebashbchatb@gmail.com';
 const gmailPassword = 'h4b1lgeh';
@@ -50,6 +51,11 @@ var mailOptions = {
 
 exports.enviarCorreoConReporte = functions.database.ref('/InformacionReporte/{IdEnviarReporte}') //Cuando se crea un nuevo registroPostulante se ejecuta el código
     .onCreate((snapshot, context) => {
+        const myPdfFile = admin.storage().bucket().file('/test/Reporte.pdf');
+        const doc = new PDFDocument;
+        const stream = doc.pipe(myPdfFile.createWriteStream());
+        doc.fontSize(25).text('Test 4 PDF!', 100, 100);
+        doc.end();
       const correo=snapshot.child('Correo').val();
       const descripcionFalla=snapshot.child('Descripcion').val();
       const domicilio=snapshot.child('Domicilio').val();
@@ -57,14 +63,14 @@ exports.enviarCorreoConReporte = functions.database.ref('/InformacionReporte/{Id
       const numCuenta=snapshot.child('No_cuenta').val();
 
         //doc.pipe(fs.createWriteStream('output.pdf'));
-                doc.text('Some text with an embedded font!', 100, 100);
+                /* doc.text('Some text with an embedded font!', 100, 100);
                 doc.end();
-                doc.save('Reporte.pdf');
+                doc.save('Reporte.pdf'); */
 
                // stream.on('finish', function() {
 
                     
-        mailOptions.attachments = [{filename: 'Reporte.pdf', path: "Eje.pdf", contentType: 'application/pdf'  }];  
+        mailOptions.attachments = [{filename: 'Reporte.pdf', path: "test/Reporte.pdf", contentType: 'application/pdf'  }];  
 
                     // or get a blob URL for display in the browser
                     //const url = stream.toBlobURL('application/pdf');
